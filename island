@@ -1,0 +1,38 @@
+from turtle import *
+from random import random
+
+def brown (x0,y0,x1,y1, d, p, n=10, m=400):
+     ''' Recursive function for building Brownian islands.
+     Parameters:
+     x0, y0, x1, y1 - coordinates of two points
+     d - dispersion
+     p - smoothness
+     n - recursion depth
+     m - scale
+
+     xm, ym - middle coordinates
+     delta - bias
+     '''
+     if n==0:
+          penup()
+          goto(x0*m-m/2,y0*m-m/2)
+          pendown()
+          goto(x1*m-m/2,y1*m-m/2)
+          return
+     xm=(x0+x1)/2.0
+     ym=(y0+y1)/2.0
+     delta = random()*(d**(1/2))*(-1**random())
+     brown(x0,y0,xm+delta,ym+delta, d/p, p, n-1)
+     brown(xm+delta,ym+delta, x1, y1, d/p, p, n-1)
+
+def main():
+     h=float(input())
+     a = 2.0**(2.0*h)
+     brown(0.0, 0.0, 1.0, 0.5, 0.01, a)
+     brown(1.0, 0.5, 0.7, 0.6, 0.01, a)
+     brown(0.7, 0.6, 0.0, 0.0, 0.01, a)
+     done()
+
+if __name__ == '__main__':
+    main()
+
